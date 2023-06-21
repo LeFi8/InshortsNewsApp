@@ -22,12 +22,12 @@ class NewsAdapterViewHolder(val binding: NewsItemBinding) : RecyclerView.ViewHol
         binding.newsDate.text = newsItem.date
         binding.seen.setImageResource(R.drawable.seen)
 
-        firebaseManager.checkIfArticleHasBeenRead(newsItem.id) { hasRead ->
+        firebaseManager.checkIfArticleHasBeenRead(newsItem.title) { hasRead ->
             if (!hasRead) binding.seen.visibility = View.INVISIBLE
         }
 
         Glide.with(binding.root)
-            .load(newsItem.imageUrl)
+            .load(newsItem.urlToImage)
             .into(binding.newsImage)
     }
 }
@@ -54,19 +54,19 @@ class NewsAdapter(private val firebaseManager: FirebaseManager) : RecyclerView.A
         binding.root.setOnClickListener {
             binding.seen.visibility = View.VISIBLE
             notifyDataSetChanged()
-            firebaseManager.addArticleAsRead(newsList[position].id)
+            firebaseManager.addArticleAsRead(newsList[position].title)
             val browserIntent = Intent()
             browserIntent
                 .setAction(Intent.ACTION_VIEW)
                 .addCategory(Intent.CATEGORY_BROWSABLE)
-                .setType("text/plain").data = Uri.parse(newsList[position].readMoreUrl)
+                .setType("text/plain").data = Uri.parse(newsList[position].url)
             binding.root.context.startActivity(browserIntent)
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    suspend fun loadNewsArticles() {
-        val newsArticles = NewsArticleParser.getNewsList(HttpRequester.requestNewsArticles())
+    suspend fun loadNewsArticles(apiKey: String) {
+        val newsArticles = NewsArticleParser.getNewsList(HttpRequester.requestNewsArticles(apiKey))
         newsList.addAll(newsArticles)
         notifyDataSetChanged()
     }

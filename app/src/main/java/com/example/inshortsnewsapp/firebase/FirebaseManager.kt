@@ -87,15 +87,15 @@ class FirebaseManager {
             })
     }
 
-    fun addArticleAsRead(articleId: String) {
+    fun addArticleAsRead(url: String) {
         usersRef
             .child(getUserUID()!!)
-            .child(articleId)
+            .child(url)
             .setValue(true)
     }
 
-    fun checkIfArticleHasBeenRead(articleId: String, callback: (Boolean) -> Unit) {
-        usersRef.child(getUserUID()!!).child(articleId)
+    fun checkIfArticleHasBeenRead(title: String, callback: (Boolean) -> Unit) {
+        usersRef.child(getUserUID()!!).child(title)
             .addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists())

@@ -9,14 +9,14 @@ class NewsArticleParser {
             val newsList = mutableListOf<NewsItem>()
             for (i in 0 until newsArticles.length()) {
                 val newsObject = newsArticles.getJSONObject(i)
-                val date = newsObject.getString("date")
-                val id = newsObject.getString("id")
-                val imageUrl = newsObject.getString("imageUrl")
-                val readMoreUrl = newsObject.optString("readMoreUrl")
+                val author = newsObject.getString("author")
                 val title = newsObject.getString("title")
+                val readMoreUrl = newsObject.optString("url")
+                val imageUrl = newsObject.getString("urlToImage")
+                val date = newsObject.getString("publishedAt")
 
                 val newsItem = NewsItem(
-                     date, id, imageUrl, readMoreUrl, title
+                     author, title, readMoreUrl, imageUrl, date
                 )
                 newsList.add(newsItem)
             }

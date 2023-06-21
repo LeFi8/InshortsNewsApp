@@ -1,10 +1,10 @@
 package com.example.inshortsnewsapp.model
 
 data class NewsItem(
-    val date: String,
-    val id: String,
-    val imageUrl: String,
-    val readMoreUrl: String,
+    val author: String,
     val title: String,
+    val url: String,
+    val urlToImage: String,
+    val date: String
 )
 

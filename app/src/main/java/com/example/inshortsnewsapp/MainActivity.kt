@@ -43,8 +43,10 @@ class MainActivity : Activity() {
         binding.todaysDate.text = getString(R.string.todays_date, date)
 
         val adapter = NewsAdapter(firebaseManager)
+        val apiKey = BuildConfig.NEWS_API_KEY
+
         CoroutineScope(Dispatchers.Main).launch {
-            adapter.loadNewsArticles()
+            adapter.loadNewsArticles(apiKey)
         }
 
         binding.recyclerView.let {
