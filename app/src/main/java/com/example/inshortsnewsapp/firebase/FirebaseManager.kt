@@ -1,4 +1,4 @@
-package com.example.inshortsnewsapp.authentication
+package com.example.inshortsnewsapp.firebase
 
 import android.app.Activity
 import android.content.Context
@@ -8,12 +8,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class FirebaseManager {
 
-    private var auth: FirebaseAuth = Firebase.auth
+    private val auth: FirebaseAuth = Firebase.auth
+    private val database: FirebaseDatabase = Firebase.database
+    private val usersRef = database.getReference("users")
 
     suspend fun login(email: String, password: String, activity: Activity): Boolean {
         return try {
@@ -27,7 +34,6 @@ class FirebaseManager {
         }
     }
 
-
     fun logout(activity: Activity) {
         Toast.makeText(
             activity,
@@ -36,19 +42,6 @@ class FirebaseManager {
         ).show()
         auth.signOut()
     }
-
-    fun getUser(): FirebaseUser? {
-        return auth.currentUser;
-    }
-
-    fun getUserUID(): String? {
-        return auth.currentUser?.uid;
-    }
-
-    fun getUserMail(): String {
-        return auth.currentUser?.email.toString()
-    }
-
     suspend fun register(email: String, password: String, activity: Activity): Boolean {
         return try {
             auth.createUserWithEmailAndPassword(email, password).await()
@@ -70,5 +63,49 @@ class FirebaseManager {
             .requestIdToken(context.getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
+    }
+
+    fun getUser(): FirebaseUser? {
+        return auth.currentUser
+    }
+
+    private fun getUserUID(): String? {
+        return auth.currentUser?.uid
+    }
+
+    fun addUserToDb() {
+        usersRef.child(getUserUID()!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    if (!dataSnapshot.exists())
+                        usersRef.child(getUserUID()!!).setValue("")
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    println("Error retrieving data from db")
+                }
+            })
+    }
+
+    fun addArticleAsRead(articleId: String) {
+        usersRef
+            .child(getUserUID()!!)
+            .child(articleId)
+            .setValue(true)
+    }
+
+    fun checkIfArticleHasBeenRead(articleId: String, callback: (Boolean) -> Unit) {
+        usersRef.child(getUserUID()!!).child(articleId)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists())
+                    callback(true)
+                else callback(false)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("Error retrieving data from db")
+            }
+        })
     }
 }

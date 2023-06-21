@@ -11,7 +11,7 @@ import java.net.URL
 
 class HttpRequester {
     companion object {
-        private val url = URL("http://knopers.com.pl:5000/news?category=technology")
+        private val url = URL("http://knopers.com.pl:5000/news?category=science")
 
         suspend fun requestNewsArticles(): JSONArray {
             return withContext(Dispatchers.IO) {

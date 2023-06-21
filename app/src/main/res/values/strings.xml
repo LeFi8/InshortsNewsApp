@@ -30,4 +30,7 @@
     <string name="todays_date">Today is %s</string>
     <string name="news_img">news_img</string>
     <string name="settings_button">settings button</string>
+    <string name="seen">seen</string>
+
+    <string name="test">test</string>
 </resources>

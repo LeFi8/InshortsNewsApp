@@ -15,7 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import com.example.inshortsnewsapp.authentication.FirebaseManager
+import com.example.inshortsnewsapp.firebase.FirebaseManager
 import com.example.inshortsnewsapp.presentation.Login
 import com.example.inshortsnewsapp.presentation.ScreenState
 import com.example.inshortsnewsapp.presentation.SignUp
