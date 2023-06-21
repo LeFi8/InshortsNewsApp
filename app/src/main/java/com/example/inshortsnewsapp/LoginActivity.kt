@@ -1,5 +1,6 @@
 package com.example.inshortsnewsapp
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Toast
@@ -15,14 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.lifecycleScope
-import androidx.preference.PreferenceManager
 import com.example.inshortsnewsapp.authentication.FirebaseManager
-import com.example.inshortsnewsapp.presentation.LoggedIn
 import com.example.inshortsnewsapp.presentation.Login
 import com.example.inshortsnewsapp.presentation.ScreenState
 import com.example.inshortsnewsapp.presentation.SignUp
 import com.example.inshortsnewsapp.presentation.rememberFirebaseGoogleAuthLauncher
-import com.example.inshortsnewsapp.theme.LoginJetpackComposeTheme
+import com.example.inshortsnewsapp.theme.InshortsNewsAppTheme
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -31,49 +30,38 @@ import kotlinx.coroutines.launch
 class LoginActivity : ComponentActivity() {
 
     private val authenticationService = FirebaseManager()
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         setContent {
-            val isLoggedIn = remember {
-                mutableStateOf(
-                    sharedPreferences.getBoolean(getString(R.string.is_logged_in), false)
-                )
-            }
-            val screenState =
-                remember { mutableStateOf(if (isLoggedIn.value) ScreenState.LOGGED_IN else ScreenState.LOGIN) }
+            val screenState = remember { mutableStateOf(ScreenState.LOGIN) }
             var user by remember { mutableStateOf(Firebase.auth.currentUser) }
             val launcher = rememberFirebaseGoogleAuthLauncher(
                 onAuthComplete = { result ->
                     user = result.user
-                    isLoggedIn.value = true
-                    screenState.value = ScreenState.LOGGED_IN
                     Toast.makeText(
                         this,
                         getString(R.string.google_login_successful),
                         Toast.LENGTH_SHORT
                     ).show()
-
-                    sharedPreferences.edit().putBoolean(
-                        getString(R.string.is_logged_in), true
-                    ).apply()
+                    startActivity(Intent(
+                        this@LoginActivity,
+                        MainActivity::class.java))
+                    finish()
                 },
                 onAuthError = {
                     user = null
                 }
             )
 
-            LoginJetpackComposeTheme {
+            InshortsNewsAppTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     BackHandler(
-                        enabled = (screenState.value == ScreenState.SIGNUP) &&
-                                (screenState.value != ScreenState.LOGIN)
+                        enabled = (screenState.value == ScreenState.SIGNUP)
                     ) {
                         screenState.value = ScreenState.LOGIN
                     }
@@ -83,14 +71,14 @@ class LoginActivity : ComponentActivity() {
                             Login(
                                 onLoginClick = { email, password ->
                                     lifecycleScope.launch {
-                                        isLoggedIn.value = authenticationService.login(
+                                        val loginSuccess = authenticationService.login(
                                             email, password, this@LoginActivity
                                         )
-                                        if (isLoggedIn.value) {
-                                            screenState.value = ScreenState.LOGGED_IN
-                                            sharedPreferences.edit().putBoolean(
-                                                getString(R.string.is_logged_in), true
-                                            ).apply()
+                                        if (loginSuccess) {
+                                            startActivity(Intent(
+                                                this@LoginActivity,
+                                                MainActivity::class.java))
+                                            finish()
                                         }
                                     }
                                 },
@@ -120,21 +108,6 @@ class LoginActivity : ComponentActivity() {
                                             screenState.value = ScreenState.LOGIN
                                     }
                                 }
-                            )
-                        }
-
-                        ScreenState.LOGGED_IN -> {
-                            LoggedIn(
-                                onLogoutClick = {
-                                    isLoggedIn.value = false
-                                    authenticationService.logout(this)
-                                    screenState.value = ScreenState.LOGIN
-
-                                    sharedPreferences.edit().putBoolean(
-                                        getString(R.string.is_logged_in), false
-                                    ).apply()
-                                },
-                                authenticationService.getUserMail()
                             )
                         }
                     }

@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.example.inshortsnewsapp.R
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -37,6 +38,14 @@ class FirebaseManager {
             Toast.LENGTH_SHORT
         ).show()
         auth.signOut()
+    }
+
+    fun getUser(): FirebaseUser? {
+        return auth.currentUser;
+    }
+
+    fun getUserUID(): String? {
+        return auth.currentUser?.uid;
     }
 
     fun getUserMail(): String {
