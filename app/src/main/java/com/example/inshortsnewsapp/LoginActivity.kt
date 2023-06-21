@@ -44,9 +44,12 @@ class LoginActivity : ComponentActivity() {
                         getString(R.string.google_login_successful),
                         Toast.LENGTH_SHORT
                     ).show()
-                    startActivity(Intent(
-                        this@LoginActivity,
-                        MainActivity::class.java))
+                    startActivity(
+                        Intent(
+                            this@LoginActivity,
+                            MainActivity::class.java
+                        )
+                    )
                     finish()
                 },
                 onAuthError = {
@@ -74,9 +77,12 @@ class LoginActivity : ComponentActivity() {
                                             email, password, this@LoginActivity
                                         )
                                         if (loginSuccess) {
-                                            startActivity(Intent(
-                                                this@LoginActivity,
-                                                MainActivity::class.java))
+                                            startActivity(
+                                                Intent(
+                                                    this@LoginActivity,
+                                                    MainActivity::class.java
+                                                )
+                                            )
                                             finish()
                                         }
                                     }
@@ -103,8 +109,15 @@ class LoginActivity : ComponentActivity() {
                                             password,
                                             this@LoginActivity
                                         )
-                                        if (registrationSuccessful)
-                                            screenState.value = ScreenState.LOGIN
+                                        if (registrationSuccessful) {
+                                            startActivity(
+                                                Intent(
+                                                    this@LoginActivity,
+                                                    MainActivity::class.java
+                                                )
+                                            )
+                                            finish()
+                                        }
                                     }
                                 }
                             )
