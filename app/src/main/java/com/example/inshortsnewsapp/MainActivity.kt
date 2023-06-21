@@ -2,11 +2,8 @@ package com.example.inshortsnewsapp
 
 import android.app.Activity
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceManager
 import com.example.inshortsnewsapp.authentication.FirebaseManager
-import com.google.firebase.ktx.Firebase
 
 class MainActivity : Activity() {
 
