@@ -19,10 +19,15 @@
     <string name="signup_failed">Failed to sign up: %s</string>
     <string name="passwords_not_matching">Passwords are not matching</string>
     <string name="logged_in_as">You are logged in as</string>
-    <string name="logged_out">Logged out</string>
+    <string name="log_out">Log out</string>
+    <string name="log_out_message">Do you want to log out?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="logged_out">You have successfully logged out</string>
     <string name="google_login_successful">Google login successful</string>
 
     <string name="hello">Hello!</string>
     <string name="todays_date">Today is %s</string>
     <string name="news_img">news_img</string>
+    <string name="settings_button">settings button</string>
 </resources>

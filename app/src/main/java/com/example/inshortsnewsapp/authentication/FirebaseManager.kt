@@ -19,9 +19,6 @@ class FirebaseManager {
         return try {
             val authResult = auth.signInWithEmailAndPassword(email, password).await()
             if (authResult.user == null) throw Exception()
-
-            val user = auth.currentUser
-            Toast.makeText(activity, user?.email, Toast.LENGTH_SHORT).show()
             true
         } catch (e: Exception) {
             val message = activity.getString(R.string.login_failed, e.message)

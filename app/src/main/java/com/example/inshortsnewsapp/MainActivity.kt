@@ -2,8 +2,10 @@ package com.example.inshortsnewsapp
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inshortsnewsapp.adapter.NewsAdapter
 import com.example.inshortsnewsapp.authentication.FirebaseManager
@@ -28,8 +30,12 @@ class MainActivity : Activity() {
 
         val isLoggedIn = firebaseManager.getUser() != null
         if (!isLoggedIn) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(
+                Intent(
+                    this@MainActivity,
+                    LoginActivity::class.java
+                )
+            )
             finish()
         }
 
@@ -47,6 +53,25 @@ class MainActivity : Activity() {
         binding.recyclerView.let {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(applicationContext)
+        }
+
+        binding.settings.setOnClickListener {
+            val alertDialog = AlertDialog.Builder(this)
+            alertDialog.setTitle(getString(R.string.log_out))
+            alertDialog.setMessage(getString(R.string.log_out_message))
+            alertDialog.setCancelable(true)
+            alertDialog.setPositiveButton(getString(R.string.yes)) { _, _ ->
+                firebaseManager.logout(this)
+                startActivity(
+                    Intent(
+                        this@MainActivity,
+                        LoginActivity::class.java
+                    )
+                )
+                finish()
+            }
+            alertDialog.setNegativeButton(getString(R.string.no)) {_, _ -> }
+            alertDialog.show()
         }
 
     }
