@@ -21,9 +21,10 @@ class NewsAdapterViewHolder(val binding: NewsItemBinding) : RecyclerView.ViewHol
         binding.newsTitle.text = newsItem.title
         binding.newsDate.text = newsItem.date
         binding.seen.setImageResource(R.drawable.seen)
+        binding.seen.visibility = View.INVISIBLE
 
         firebaseManager.checkIfArticleHasBeenRead(newsItem.title) { hasRead ->
-            if (!hasRead) binding.seen.visibility = View.INVISIBLE
+            if (hasRead) binding.seen.visibility = View.VISIBLE
         }
 
         Glide.with(binding.root)
@@ -53,7 +54,6 @@ class NewsAdapter(private val firebaseManager: FirebaseManager) : RecyclerView.A
 
         binding.root.setOnClickListener {
             binding.seen.visibility = View.VISIBLE
-            notifyDataSetChanged()
             firebaseManager.addArticleAsRead(newsList[position].title)
             val browserIntent = Intent()
             browserIntent
