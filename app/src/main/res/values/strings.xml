@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">InshortsNewsApp</string>
+    <string name="welcome">Welcome</string>
+    <string name="login">LOG IN</string>
+    <string name="signup">SIGN UP</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login_w_google">Log in with Google</string>
+    <string name="google_logo">Google logo</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="login_failed">Login failed %s</string>
+    <string name="create_account">Create Account</string>
+    <string name="your_mail">Your email address</string>
+    <string name="your_password">Choose your password</string>
+    <string name="repeat_password">Repeat your password</string>
+    <string name="or">OR</string>
+    <string name="account_created">Account created successfully</string>
+    <string name="signup_failed">Failed to sign up: %s</string>
+    <string name="passwords_not_matching">Passwords are not matching</string>
+    <string name="logged_in_as">You are logged in as</string>
+    <string name="logged_out">Logged out</string>
+    <string name="google_login_successful">Google login successful</string>
+
+    <string name="is_logged_in">isLoggedIn</string>
+</resources>
