@@ -14,9 +14,10 @@ class NewsArticleParser {
                 val descriptionStr = newsObject.getString("description")
                 val readMoreUrl = newsObject.optString("url")
                 val imageUrl = newsObject.getString("urlToImage")
-                val date = newsObject.getString("publishedAt")
+                val dateStr = newsObject.getString("publishedAt")
 
                 val description = descriptionStr.replace("\r\n".toRegex(), "")
+                val date = DateFormatter.formatDate(dateStr)
                 val newsItem = NewsItem(
                      author, title, description, readMoreUrl, imageUrl, date
                 )
