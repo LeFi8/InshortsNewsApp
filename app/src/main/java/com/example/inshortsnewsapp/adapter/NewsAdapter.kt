@@ -18,7 +18,7 @@ import com.example.inshortsnewsapp.util.NewsArticleParser
 
 class NewsAdapterViewHolder(val binding: NewsItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(newsItem: NewsItem, firebaseManager: FirebaseManager) {
-        binding.newsTitle.text = newsItem.title
+        binding.newsDescription.text = newsItem.description
         binding.newsDate.text = newsItem.date
         binding.seen.setImageResource(R.drawable.seen)
         binding.seen.visibility = View.INVISIBLE

@@ -11,12 +11,14 @@ class NewsArticleParser {
                 val newsObject = newsArticles.getJSONObject(i)
                 val author = newsObject.getString("author")
                 val title = newsObject.getString("title")
+                val descriptionStr = newsObject.getString("description")
                 val readMoreUrl = newsObject.optString("url")
                 val imageUrl = newsObject.getString("urlToImage")
                 val date = newsObject.getString("publishedAt")
 
+                val description = descriptionStr.replace("\r\n".toRegex(), "")
                 val newsItem = NewsItem(
-                     author, title, readMoreUrl, imageUrl, date
+                     author, title, description, readMoreUrl, imageUrl, date
                 )
                 newsList.add(newsItem)
             }
