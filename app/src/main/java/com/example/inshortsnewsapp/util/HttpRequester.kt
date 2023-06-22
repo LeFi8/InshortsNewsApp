@@ -10,7 +10,7 @@ import org.json.JSONObject
 
 class HttpRequester {
     companion object {
-        private const val newsURL = "https://newsapi.org/v2/everything?q=technology&sortBy=popularity&pageSize=10&apiKey="
+        private const val newsURL = "https://newsapi.org/v2/everything?q=technology&sortBy=popularity&pageSize=15&apiKey="
         suspend fun requestNewsArticles(apiKey: String): JSONArray {
             return withContext(Dispatchers.IO) {
                 try {
