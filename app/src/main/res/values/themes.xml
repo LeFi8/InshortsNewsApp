@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.InshortsNewsApp" parent="android:Theme.Material.Light.NoActionBar" >
+    <style name="Theme.InshortsNewsApp" parent="Theme.Material3.Light.NoActionBar" >
         <item name="colorPrimary">@color/yellow</item>
         <item name="android:statusBarColor">@color/yellow</item>
     </style>
