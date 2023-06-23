@@ -32,5 +32,9 @@
     <string name="settings_button">settings button</string>
     <string name="seen">seen</string>
 
+    <string name="general">General</string>
+    <string name="tech">Technology</string>
+    <string name="sports">Sports</string>
+
     <string name="test">test</string>
 </resources>

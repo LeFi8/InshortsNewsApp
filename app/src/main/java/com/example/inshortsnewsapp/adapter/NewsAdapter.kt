@@ -65,8 +65,9 @@ class NewsAdapter(private val firebaseManager: FirebaseManager) : RecyclerView.A
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    suspend fun loadNewsArticles(apiKey: String) {
-        val newsArticles = NewsArticleParser.getNewsList(HttpRequester.requestNewsArticles(apiKey))
+    suspend fun loadNewsArticles(apiKey: String, category: String) {
+        val newsArticles = NewsArticleParser.getNewsList(HttpRequester.requestNewsArticles(apiKey, category))
+        newsList.clear()
         newsList.addAll(newsArticles)
         notifyDataSetChanged()
     }

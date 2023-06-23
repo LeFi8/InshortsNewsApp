@@ -34,6 +34,7 @@
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/poppins_bold"
+                android:textColor="@color/ivory"
                 android:text="@string/hello"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -46,22 +47,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_light"
+                android:textColor="@color/ivory"
                 android:text="@string/todays_date"
                 app:layout_constraintStart_toStartOf="@+id/hello"
                 app:layout_constraintTop_toBottomOf="@+id/hello" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.488"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/todaysDate"
-                app:layout_constraintVertical_bias="0.0"
-                tools:listitem="@layout/news_item" />
 
             <Button
                 android:id="@+id/settings"
@@ -77,6 +66,30 @@
                 app:layout_constraintTop_toTopOf="@+id/hello"
                 app:layout_constraintVertical_bias="0.0"
                 app:srcCompat="@drawable/baseline_settings_48" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/todaysDate"
+                app:tabIndicatorColor="@color/ivory"
+                app:tabTextColor="@color/ivory" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.488"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tab_layout"
+                tools:listitem="@layout/news_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

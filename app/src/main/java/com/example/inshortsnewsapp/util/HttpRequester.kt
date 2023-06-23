@@ -10,9 +10,9 @@ import org.json.JSONObject
 
 class HttpRequester {
     companion object {
-        private const val newsURL = "https://newsapi.org/v2/everything?q=technology&sortBy=popularity&pageSize=15&apiKey="
-        suspend fun requestNewsArticles(apiKey: String): JSONArray {
+        suspend fun requestNewsArticles(apiKey: String, category: String): JSONArray {
             return withContext(Dispatchers.IO) {
+                val newsURL = "https://newsapi.org/v2/everything?q=$category&sortBy=popularity&pageSize=15&apiKey="
                 try {
                     val client = OkHttpClient()
                     val request = Request.Builder()
