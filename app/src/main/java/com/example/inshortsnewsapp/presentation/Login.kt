@@ -108,7 +108,6 @@ fun Login(onLoginClick: (String, String) -> Unit, onNoAccountClick: () -> Unit, 
             }
             DividerWithText(stringResource(id = R.string.or))
 
-            // TODO: google sign up logic
             Button(
                 onClick = onGoogleLoginClick,
                 modifier = Modifier
