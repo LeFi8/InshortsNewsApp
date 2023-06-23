@@ -24,7 +24,7 @@ class FirebaseManager {
 
     suspend fun login(email: String, password: String, activity: Activity): Boolean {
         return try {
-            val authResult = auth.signInWithEmailAndPassword(email, password).await()
+            val authResult = auth.signInWithEmailAndPassword(email.trim(), password).await()
             if (authResult.user == null) throw Exception()
             true
         } catch (e: Exception) {
