@@ -37,8 +37,7 @@ class MainActivity : Activity() {
                 )
             )
             finish()
-        }
-        firebaseManager.addUserToDb()
+        } else firebaseManager.addUserToDb()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
