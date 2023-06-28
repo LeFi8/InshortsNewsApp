@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.inshortsnewsapp.adapter.NewsAdapter
 import com.example.inshortsnewsapp.firebase.FirebaseManager
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat
 
 class MainActivity : Activity() {
 
+    private val splashViewModel = SplashViewModel()
     private lateinit var firebaseManager: FirebaseManager
     private lateinit var binding: ActivityMainBinding
     private val apiKey = BuildConfig.NEWS_API_KEY
@@ -27,6 +29,12 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         firebaseManager = FirebaseManager()
+
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                splashViewModel.isLoading.value
+            }
+        }
 
         val isLoggedIn = firebaseManager.getUser() != null
         if (!isLoggedIn) {
