@@ -43,6 +43,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
@@ -94,7 +95,7 @@ fun Login(onLoginClick: (String, String) -> Unit, onNoAccountClick: () -> Unit, 
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = stringResource(id = R.string.welcome), fontSize = 48.sp, fontFamily = Poppins)
-            LottieIcon(animationRes = R.raw.lock_lottie)
+            LottieIcon(animationRes = R.raw.news_lottie)
             TextInput(inputType = InputType.Username) { user = it }
             TextInput(inputType = InputType.Password) { password = it }
             Button(
@@ -168,7 +169,13 @@ fun LottieIcon(animationRes: Int,
         iterations = repeatCount,
         restartOnPlay = true
     )
-    LottieAnimation(composition = composition, progress = progress, Modifier.size(iconSize))
+    LottieAnimation(
+        composition = composition,
+        progress = progress,
+        modifier = Modifier
+            .size(iconSize)
+            .scale(1.5f, 1.5f)
+    )
 }
 
 sealed class InputType (
